@@ -45,3 +45,4 @@ app.*.map.json
 
 #assets/designs
 /assets/designs
+/firebase_emulators_data
