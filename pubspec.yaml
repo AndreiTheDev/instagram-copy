@@ -8,6 +8,7 @@ environment:
 
 dependencies:
   cloud_firestore: ^4.9.2
+  cloud_functions: ^4.5.8
   firebase_auth: ^4.10.0
   firebase_core: ^2.16.0
   flutter:
@@ -34,3 +35,21 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/images/ig_logo.png
+    - assets/images/my_photo.jpg
+    - assets/images/Meta-Logo.png
+
+  fonts:
+    - family: AltFont
+      fonts:
+        - asset: assets/fonts/ig_sans_font/Instagram_Sans_Headline.ttf
+    - family: Instagram_Sans
+      fonts:
+        - asset: assets/fonts/ig_sans_font/Instagram_Sans_Regular.ttf
+        - asset: assets/fonts/ig_sans_font/Instagram_Sans_Light.ttf
+        - asset: assets/fonts/ig_sans_font/Instagram_Sans_Medium.ttf
+    - family: Karmela
+      fonts:
+        - asset: assets/fonts/karmela_font/Karmela_Regular.ttf
