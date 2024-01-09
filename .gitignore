@@ -45,4 +45,11 @@ app.*.map.json
 
 #assets/designs
 /assets/designs
-/firebase_emulators_data
+/firebase_emulator_data
+
+#Code gen generated files
+*.g.dart
+*.freezed.dart
+
+#workspace settings
+.vscode
