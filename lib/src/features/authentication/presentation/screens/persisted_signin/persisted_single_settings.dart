@@ -58,7 +58,7 @@ class _PersistedSingleSettingsScreenState
               ),
               xsSeparator,
               Text(
-                widget.user.email!,
+                widget.user.email,
                 style: const TextStyle(
                   fontSize: smallText,
                   fontWeight: FontWeight.w600,

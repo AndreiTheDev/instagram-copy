@@ -47,7 +47,7 @@ class PersistedUsersLayout extends ConsumerWidget {
           ),
           xsSeparator,
           Text(
-            usersList[0].email!,
+            usersList[0].email,
             style: const TextStyle(
               fontSize: mediumText,
               fontWeight: FontWeight.w600,
@@ -91,7 +91,7 @@ class PersistedUsersLayout extends ConsumerWidget {
                       width: xsSize,
                     ),
                     Text(
-                      usersList[index].email!,
+                      usersList[index].email,
                       style: const TextStyle(
                         fontSize: xsSize,
                         fontWeight: FontWeight.w600,

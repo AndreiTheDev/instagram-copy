@@ -67,7 +67,7 @@ class DeletePersistedList extends ConsumerWidget {
                               width: xsSize,
                             ),
                             Text(
-                              usersList[index].email!,
+                              usersList[index].email,
                               style: const TextStyle(
                                 fontSize: xsSize,
                                 fontWeight: FontWeight.w600,

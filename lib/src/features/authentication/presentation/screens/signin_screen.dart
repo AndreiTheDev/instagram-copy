@@ -118,7 +118,13 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
               xsSeparator,
               AuthTextButton(
                 text: 'Forgotten password?',
-                callback: () {},
+                callback: () async {
+                  if (isPersisted.hasValue && isPersisted.value!) {
+                    await const PersistedRecoverPasswordRoute().push(context);
+                  } else {
+                    await const RecoverPasswordRoute().push(context);
+                  }
+                },
               ),
               const Expanded(
                 child: SizedBox(),

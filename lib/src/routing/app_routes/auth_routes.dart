@@ -8,6 +8,7 @@ import '../../features/authentication/presentation/screens/authentication_screen
 import '../../features/authentication/presentation/screens/persisted_signin/persisted_multi_setting_screen.dart';
 import '../../features/authentication/presentation/screens/persisted_signin/persisted_signin_screen.dart';
 import '../../features/authentication/presentation/screens/persisted_signin/persisted_single_settings.dart';
+import '../../features/authentication/presentation/screens/recover_password_screen.dart';
 import '../../features/authentication/presentation/screens/signin_screen.dart';
 import '../../features/authentication/presentation/screens/signup/birthday_form_screen.dart';
 import '../../features/authentication/presentation/screens/signup/complete_name_form_screen.dart';
@@ -59,6 +60,7 @@ class SplashScreenRoute extends GoRouteData {
           ],
         ),
         TypedGoRoute<PersistedSignInRoute>(path: 'signin'),
+        TypedGoRoute<PersistedRecoverPasswordRoute>(path: 'recover-password'),
         TypedGoRoute<PersistedCompleteNameRoute>(
           path: 'signup/complete-name-form',
         ),
@@ -77,6 +79,7 @@ class SplashScreenRoute extends GoRouteData {
     TypedGoRoute<SignInFlowRoute>(
       path: 'signin',
       routes: [
+        TypedGoRoute<RecoverPasswordRoute>(path: 'recover-password'),
         TypedGoRoute<CompleteNameRoute>(path: 'signup/complete-name-form'),
         TypedGoRoute<BirthdayRoute>(path: 'signup/birthday-form'),
         TypedGoRoute<EmailRoute>(path: 'signup/email-form'),
@@ -153,6 +156,22 @@ class PersistedCompleteNameRoute extends GoRouteData {
   @override
   Widget build(final BuildContext context, final GoRouterState state) =>
       const CompleteNameFormScreen();
+}
+
+class PersistedRecoverPasswordRoute extends GoRouteData {
+  const PersistedRecoverPasswordRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const RecoverPasswordScreen();
+}
+
+class RecoverPasswordRoute extends GoRouteData {
+  const RecoverPasswordRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const RecoverPasswordScreen();
 }
 
 class CompleteNameRoute extends GoRouteData {
