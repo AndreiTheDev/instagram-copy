@@ -18,7 +18,13 @@ class UserRepository {
 
     await for (final user in changes) {
       if (user != null) {
-        yield UserEntity(uid: user.uid, user: user);
+        yield UserEntity(
+          uid: user.uid,
+          emailVerified: user.emailVerified,
+          displayName: user.displayName,
+          email: user.email!,
+          phoneNumber: user.phoneNumber,
+        );
       } else {
         yield null;
       }

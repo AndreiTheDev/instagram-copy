@@ -23,12 +23,11 @@ Stream<UserModel?> userChanges(final UserChangesRef ref) async* {
 @riverpod
 Future<UserState> userState(final UserStateRef ref) async {
   final UserModel? newUser = await ref.watch(userChangesProvider.future);
-  print('userstate call');
   // await Future.delayed(const Duration(seconds: 2));
   if (newUser == null) {
     return UserUnauthenticated();
   }
-  if (newUser.user.emailVerified) {
+  if (newUser.emailVerified) {
     // ref.read(authControllerProvider).verifyEmail();
   }
   return UserAuthenticated(newUser);

@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../data/entities/user_entity.dart';
@@ -9,12 +8,31 @@ part 'user.freezed.dart';
 class UserModel with _$UserModel {
   factory UserModel({
     required final String uid,
-    required final auth.User user,
+    required final bool emailVerified,
+    required final String email,
+    final String? displayName,
+    final String? phoneNumber,
   }) = _UserModel;
 
   UserModel._();
 
   factory UserModel.fromEntity(final UserEntity entity) {
-    return UserModel(uid: entity.uid, user: entity.user);
+    return UserModel(
+      uid: entity.uid,
+      emailVerified: entity.emailVerified,
+      displayName: entity.displayName,
+      email: entity.email,
+      phoneNumber: entity.phoneNumber,
+    );
+  }
+
+  UserEntity toEntity() {
+    return UserEntity(
+      uid: uid,
+      emailVerified: emailVerified,
+      displayName: displayName,
+      email: email,
+      phoneNumber: phoneNumber,
+    );
   }
 }
