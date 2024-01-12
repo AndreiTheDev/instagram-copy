@@ -12,27 +12,30 @@ MobileAuthRepository mobileAuthRepository(final MobileAuthRepositoryRef ref) =>
 
 class MobileAuthRepository implements IAuthRepository {
   final _functionsInstance = FirebaseFunctions.instance;
-  final _authInstace = FirebaseAuth.instance;
+  final _authInstance = FirebaseAuth.instance;
 
   @override
   Future<void> signIn(
     final String email,
     final String password,
   ) async {
-    await _authInstace.signInWithEmailAndPassword(
+    await _authInstance.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
   }
 
-  // Future<void> signInWithToken() async {}
+  @override
+  Future<void> signInWithToken(final String token) async {
+    await _authInstance.signInWithCustomToken(token);
+  }
 
   @override
   Future<User?> signUpWithEmail(
     final String email,
     final String password,
   ) async {
-    final userCredential = await _authInstace.createUserWithEmailAndPassword(
+    final userCredential = await _authInstance.createUserWithEmailAndPassword(
       email: email,
       password: password,
     );
@@ -41,13 +44,13 @@ class MobileAuthRepository implements IAuthRepository {
 
   @override
   Future<void> signOut() async {
-    await _authInstace.signOut();
+    await _authInstance.signOut();
   }
 
   @override
   Future<void> deleteAccount() async {
-    if (_authInstace.currentUser != null) {
-      await _authInstace.currentUser!.delete();
+    if (_authInstance.currentUser != null) {
+      await _authInstance.currentUser!.delete();
     } else {
       throw Exception('No user signed in');
     }
@@ -68,5 +71,18 @@ class MobileAuthRepository implements IAuthRepository {
         'signUpData': data,
       },
     );
+  }
+
+  @override
+  Future<String> generateSignInToken(final String uid) async {
+    // final String uid = _getUserUid();
+    final String token = await _functionsInstance
+        .httpsCallableFromUrl(
+      'http://127.0.0.1:5001/instagram-copy-c694f/us-central1/postsignupdetails-generateSignInToken',
+    )
+        .call<String>(
+      {'uid': uid},
+    ).then((result) => result.data);
+    return token;
   }
 }

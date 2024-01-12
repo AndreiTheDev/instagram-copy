@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-abstract class IAuthRepository {
+abstract interface class IAuthRepository {
   Future<void> signIn(
     final String email,
     final String password,
@@ -19,4 +19,8 @@ abstract class IAuthRepository {
     final String uid,
     final Map<String, dynamic> data,
   );
+
+  Future<void> signInWithToken(final String token);
+
+  Future<String> generateSignInToken(final String uid);
 }

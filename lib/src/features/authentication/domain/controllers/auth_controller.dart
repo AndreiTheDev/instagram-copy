@@ -2,6 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../services/auth_service.dart';
 import '../models/signup_form.dart';
+import '../models/user.dart';
 import 'signup_form_controller.dart';
 
 part 'auth_controller.g.dart';
@@ -23,6 +24,10 @@ class AuthController {
 
   Future<void> signIn(final String email, final String password) async {
     await _authService.signIn(email, password);
+  }
+
+  Future<void> signInWithToken(final UserModel user) async {
+    await _authService.signInWithToken(user);
   }
 
   Future<void> signUpWithEmail() async {
