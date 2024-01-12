@@ -92,11 +92,10 @@ class SignUpFormController extends _$SignUpFormController {
     state = state.copyWith.username(isValidating: true);
     //debounce rest of function
     _debouncer.call(() async {
-      print('debounce call');
-      print(usernameValue);
       final isValidUsername = await FirebaseFunctions.instance
           .httpsCallableFromUrl(
-              'http://127.0.0.1:5001/instagram-copy-c694f/us-central1/postsignupdetails-checkUsernameExists')
+            'http://127.0.0.1:5001/instagram-copy-c694f/us-central1/postsignupdetails-checkUsernameExists',
+          )
           .call<bool>(usernameValue)
           .then((result) => result.data);
       if (!isValidUsername) {

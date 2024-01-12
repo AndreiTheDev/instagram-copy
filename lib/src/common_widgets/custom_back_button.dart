@@ -21,12 +21,18 @@ class CustomBackButton extends StatelessWidget {
       ),
       onPressed: onPressed,
       icon: Container(
-        height: 32,
-        width: 32,
+        height: 36,
+        width: 36,
         alignment: Alignment.centerLeft,
         child: isIos
-            ? const Icon(Icons.arrow_back_ios)
-            : const Icon(Icons.arrow_back),
+            ? const Icon(
+                Icons.arrow_back_ios,
+                size: 28,
+              )
+            : const Icon(
+                Icons.arrow_back,
+                size: 28,
+              ),
       ),
     );
   }
