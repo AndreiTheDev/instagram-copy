@@ -15,10 +15,10 @@ void main() async {
 
   if (kDebugMode) {
     try {
-      FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
-      FirebaseFunctions.instance
-          .useFunctionsEmulator('http://localhost:5001', 5001);
-      await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
+      const ip = '192.168.100.48';
+      FirebaseFirestore.instance.useFirestoreEmulator(ip, 8080);
+      FirebaseFunctions.instance.useFunctionsEmulator(ip, 5001);
+      await FirebaseAuth.instance.useAuthEmulator(ip, 9099);
     } on Exception catch (e) {
       print(e);
     }
