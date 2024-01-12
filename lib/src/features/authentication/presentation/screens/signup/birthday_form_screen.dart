@@ -1,11 +1,14 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../../constants/exports.dart';
-import '../../../../../routing/app_routes/persisted_signin_routes.dart';
+import '../../../../../routing/app_routes/auth_routes.dart';
 import '../../../../../utils/logger.dart';
+import '../../../domain/controllers/persisted_users_controller.dart';
 import '../../../domain/controllers/signup_form_controller.dart';
 import '../../widgets/auth_button.dart';
 import '../../widgets/auth_text_field.dart';
@@ -40,6 +43,7 @@ class _BirthdayFormScreenState extends ConsumerState<BirthdayFormScreen> {
 
   @override
   Widget build(final BuildContext context) {
+    final isPersisted = ref.watch(isPersistedFlowProvider);
     return PopScope(
       canPop: false,
       onPopInvoked: (didPop) {
@@ -113,7 +117,11 @@ class _BirthdayFormScreenState extends ConsumerState<BirthdayFormScreen> {
                     .read(signUpFormControllerProvider.notifier)
                     .isValidBirhday();
                 if (isValid) {
-                  await const UsernameRoute().push(context);
+                  if (isPersisted.hasValue && isPersisted.value!) {
+                    await const PersistedUsernameRoute().push(context);
+                  } else {
+                    await const UsernameRoute().push(context);
+                  }
                 }
                 setState(() {
                   _textFieldEnabled = true;

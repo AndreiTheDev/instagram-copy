@@ -1,9 +1,12 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../../constants/exports.dart';
-import '../../../../../routing/app_routes/persisted_signin_routes.dart';
+import '../../../../../routing/app_routes/auth_routes.dart';
+import '../../../domain/controllers/persisted_users_controller.dart';
 import '../../../domain/controllers/signup_form_controller.dart';
 import '../../widgets/auth_button.dart';
 import '../../widgets/auth_text_field.dart';
@@ -38,6 +41,7 @@ class _UsernameFormScreenState extends ConsumerState<UsernameFormScreen> {
 
   @override
   Widget build(final BuildContext context) {
+    final isPersisted = ref.watch(isPersistedFlowProvider);
     return PopScope(
       canPop: false,
       onPopInvoked: (didPop) {
@@ -106,7 +110,11 @@ class _UsernameFormScreenState extends ConsumerState<UsernameFormScreen> {
                       .select((value) => value.username.error?.errorText),
                 );
                 if (error == null && !isValidating) {
-                  await const PhoneNumberRoute().push(context);
+                  if (isPersisted.hasValue && isPersisted.value!) {
+                    await const PersistedPhoneNumberRoute().push(context);
+                  } else {
+                    await const PhoneNumberRoute().push(context);
+                  }
                 }
                 setState(() {
                   _textFieldEnabled = true;

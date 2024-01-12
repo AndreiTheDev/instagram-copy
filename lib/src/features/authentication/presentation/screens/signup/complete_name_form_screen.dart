@@ -3,7 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../../constants/exports.dart';
-import '../../../../../routing/app_routes/persisted_signin_routes.dart';
+import '../../../../../routing/app_routes/auth_routes.dart';
+import '../../../domain/controllers/persisted_users_controller.dart';
 import '../../../domain/controllers/signup_form_controller.dart';
 import '../../widgets/auth_button.dart';
 import '../../widgets/auth_text_field.dart';
@@ -38,6 +39,7 @@ class _CompleteNameSignUpState extends ConsumerState<CompleteNameFormScreen> {
 
   @override
   Widget build(final BuildContext context) {
+    final isPersisted = ref.watch(isPersistedFlowProvider);
     return PopScope(
       canPop: false,
       onPopInvoked: (final didPop) async {
@@ -45,7 +47,7 @@ class _CompleteNameSignUpState extends ConsumerState<CompleteNameFormScreen> {
           context: context,
           builder: (context) {
             return Dialog(
-              child: Container(
+              child: SizedBox(
                 height: 200,
                 width: 200,
                 child: ElevatedButton(
@@ -54,7 +56,7 @@ class _CompleteNameSignUpState extends ConsumerState<CompleteNameFormScreen> {
                       ..pop()
                       ..pop();
                   },
-                  child: Text('pop'),
+                  child: const Text('pop'),
                 ),
               ),
             );
@@ -93,7 +95,11 @@ class _CompleteNameSignUpState extends ConsumerState<CompleteNameFormScreen> {
                     .read(signUpFormControllerProvider.notifier)
                     .isValidCompleteName();
                 if (isValid) {
-                  await const PasswordRoute().push(context);
+                  if (isPersisted.hasValue && isPersisted.value!) {
+                    await const PersistedPasswordRoute().push(context);
+                  } else {
+                    await const PasswordRoute().push(context);
+                  }
                 }
                 setState(() {
                   _textFieldEnabled = true;

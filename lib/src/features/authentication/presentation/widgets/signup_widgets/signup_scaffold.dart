@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../../common_widgets/custom_back_button.dart';
 import '../../../../../constants/exports.dart';
-import '../../../../../routing/app_routes/persisted_signin_routes.dart';
+import '../../../../../routing/app_routes/auth_routes.dart';
 import '../auth_text_button.dart';
 import '../custom_app_bar.dart';
 import '../gradient_decoration.dart';
@@ -34,7 +34,7 @@ class SignUpScaffold extends StatelessWidget {
               AuthTextButton(
                 text: 'Already have an account?',
                 callback: () {
-                  const SignInRoute().go(context);
+                  const SignInFlowRoute().go(context);
                 },
                 color: loginBlueColor,
               ),

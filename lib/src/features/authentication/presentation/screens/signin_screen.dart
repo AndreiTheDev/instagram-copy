@@ -5,10 +5,9 @@ import 'package:go_router/go_router.dart';
 // import '../../domain/auth_controller.dart';
 import '../../../../common_widgets/custom_back_button.dart';
 import '../../../../constants/exports.dart';
-import '../../../../routing/app_routes/persisted_signin_routes.dart'
-    as persisted_flow;
-import '../../../../routing/app_routes/signin_routes.dart' as signin_flow;
+import '../../../../routing/app_routes/auth_routes.dart';
 import '../../domain/controllers/auth_controller.dart';
+import '../../domain/controllers/persisted_users_controller.dart';
 import '../widgets/auth_button.dart';
 import '../widgets/auth_outlined_button.dart';
 import '../widgets/auth_text_button.dart';
@@ -17,9 +16,7 @@ import '../widgets/custom_app_bar.dart';
 import '../widgets/gradient_decoration.dart';
 
 class SignInScreen extends ConsumerStatefulWidget {
-  const SignInScreen({this.isPersisted = false, super.key});
-
-  final bool isPersisted;
+  const SignInScreen({super.key});
 
   @override
   ConsumerState<SignInScreen> createState() => _SignInScreenState();
@@ -47,6 +44,8 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
   @override
   Widget build(final BuildContext context) {
     final bool isIos = Theme.of(context).platform == TargetPlatform.iOS;
+    final isPersisted = ref.watch(isPersistedFlowProvider);
+    print('$isPersisted');
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -55,7 +54,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
           padding: const EdgeInsets.all(xsSize),
           child: Column(
             children: [
-              if (widget.isPersisted)
+              if (isPersisted.hasValue && isPersisted.value!)
                 CustomAppBar(
                   buttonLeft: CustomBackButton(onPressed: context.pop),
                 )
@@ -127,11 +126,10 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
               AuthOutlinedButton(
                 text: 'Create a new account',
                 callback: () async {
-                  if (widget.isPersisted) {
-                    const persisted_flow.CompleteNameRoute()
-                        .pushReplacement(context);
+                  if (isPersisted.hasValue && isPersisted.value!) {
+                    const PersistedCompleteNameRoute().pushReplacement(context);
                   } else {
-                    await const signin_flow.SignUpRoute().push(context);
+                    await const CompleteNameRoute().push(context);
                   }
                 },
                 textColor: const Color(0xff0665bd),

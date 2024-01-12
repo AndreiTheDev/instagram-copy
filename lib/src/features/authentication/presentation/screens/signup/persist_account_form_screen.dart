@@ -1,18 +1,23 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../constants/exports.dart';
-import '../../../../../routing/app_routes/persisted_signin_routes.dart';
+import '../../../../../routing/app_routes/auth_routes.dart';
+import '../../../domain/controllers/persisted_users_controller.dart';
 import '../../widgets/auth_button.dart';
 import '../../widgets/auth_outlined_button.dart';
 import '../../widgets/signup_widgets/description_text.dart';
 import '../../widgets/signup_widgets/headline_text.dart';
 import '../../widgets/signup_widgets/signup_scaffold.dart';
 
-class PersistAccountFormScreen extends StatelessWidget {
+class PersistAccountFormScreen extends ConsumerWidget {
   const PersistAccountFormScreen({super.key});
 
   @override
-  Widget build(final BuildContext context) {
+  Widget build(final BuildContext context, WidgetRef ref) {
+    final isPersisted = ref.watch(isPersistedFlowProvider);
     return SignUpScaffold(
       child: Column(
         children: [
@@ -25,15 +30,23 @@ class PersistAccountFormScreen extends StatelessWidget {
           smallSeparator,
           AuthButton(
             text: 'Save',
-            callback: () {
-              const BirthdayRoute().push(context);
+            callback: () async {
+              if (isPersisted.hasValue && isPersisted.value!) {
+                await const PersistedBirthdayRoute().push(context);
+              } else {
+                await const BirthdayRoute().push(context);
+              }
             },
           ),
           xsSeparator,
           AuthOutlinedButton(
             text: 'Not now',
-            callback: () {
-              const BirthdayRoute().push(context);
+            callback: () async {
+              if (isPersisted.hasValue && isPersisted.value!) {
+                await const PersistedBirthdayRoute().push(context);
+              } else {
+                await const BirthdayRoute().push(context);
+              }
             },
           ),
         ],
