@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import '../../../../constants/exports.dart';
 
 class CustomAppBar extends StatelessWidget {
-  const CustomAppBar({this.buttonLeft, this.buttonRight, super.key});
+  const CustomAppBar(
+      {this.buttonLeft, this.widgetMiddle, this.buttonRight, super.key});
 
   final Widget? buttonLeft;
+  final Widget? widgetMiddle;
   final Widget? buttonRight;
 
   @override
@@ -17,11 +19,15 @@ class CustomAppBar extends StatelessWidget {
         children: [
           buttonLeft ??
               const SizedBox(
+                width: 36,
+              ),
+          widgetMiddle ??
+              const SizedBox(
                 width: 1,
               ),
           buttonRight ??
               const SizedBox(
-                width: 1,
+                width: 36,
               ),
         ],
       ),
