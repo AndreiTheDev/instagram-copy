@@ -15,7 +15,7 @@ class SignUpFormController extends _$SignUpFormController {
     return SignUpFormModel.initial();
   }
 
-  final _debouncer = Debounce(const Duration(milliseconds: 1500));
+  final _debouncer = Debounce(const Duration(milliseconds: 1000));
 
   void onCompleteNameChange(final String newValue) {
     state = state.copyWith.completeName(fieldValue: newValue, error: null);

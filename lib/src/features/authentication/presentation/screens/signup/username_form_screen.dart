@@ -101,6 +101,9 @@ class _UsernameFormScreenState extends ConsumerState<UsernameFormScreen> {
                 setState(() {
                   _textFieldEnabled = false;
                 });
+                await ref
+                    .read(signUpFormControllerProvider.notifier)
+                    .isValidUsername();
                 final isValidating = ref.read(
                   signUpFormControllerProvider
                       .select((value) => value.username.isValidating),
@@ -111,9 +114,11 @@ class _UsernameFormScreenState extends ConsumerState<UsernameFormScreen> {
                 );
                 if (error == null && !isValidating) {
                   if (isPersisted.hasValue && isPersisted.value!) {
-                    await const PersistedPhoneNumberRoute().push(context);
+                    context.mounted &&
+                        await const PersistedPhoneNumberRoute().push(context);
                   } else {
-                    await const PhoneNumberRoute().push(context);
+                    context.mounted &&
+                        await const PhoneNumberRoute().push(context);
                   }
                 }
                 setState(() {
