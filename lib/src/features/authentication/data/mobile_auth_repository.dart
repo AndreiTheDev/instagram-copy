@@ -48,6 +48,13 @@ class MobileAuthRepository implements IAuthRepository {
   }
 
   @override
+  Future<void> resetPassword(final String email) async {
+    await _authInstance.sendPasswordResetEmail(
+      email: email,
+    );
+  }
+
+  @override
   Future<void> deleteAccount() async {
     if (_authInstance.currentUser != null) {
       await _authInstance.currentUser!.delete();

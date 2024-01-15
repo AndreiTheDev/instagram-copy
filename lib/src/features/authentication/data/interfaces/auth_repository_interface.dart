@@ -13,6 +13,8 @@ abstract interface class IAuthRepository {
 
   Future<void> signOut();
 
+  Future<void> resetPassword(final String email);
+
   Future<void> deleteAccount();
 
   Future<void> initFirestoreUser(

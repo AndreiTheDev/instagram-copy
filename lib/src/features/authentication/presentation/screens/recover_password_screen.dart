@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../common_widgets/custom_back_button.dart';
 import '../../../../constants/exports.dart';
+import '../../domain/controllers/auth_controller.dart';
 import '../widgets/auth_button.dart';
 import '../widgets/auth_outlined_button.dart';
 import '../widgets/auth_text_button.dart';
@@ -10,15 +12,17 @@ import '../widgets/auth_text_field.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/gradient_decoration.dart';
 
-class RecoverPasswordScreen extends StatefulWidget {
+class RecoverPasswordScreen extends ConsumerStatefulWidget {
   const RecoverPasswordScreen({super.key});
 
   @override
-  State<RecoverPasswordScreen> createState() => _RecoverPasswordScreenState();
+  ConsumerState<RecoverPasswordScreen> createState() =>
+      _RecoverPasswordScreenState();
 }
 
-class _RecoverPasswordScreenState extends State<RecoverPasswordScreen> {
+class _RecoverPasswordScreenState extends ConsumerState<RecoverPasswordScreen> {
   late final TextEditingController _textController;
+  bool isFieldEnabled = true;
 
   @override
   void initState() {
@@ -72,11 +76,29 @@ class _RecoverPasswordScreenState extends State<RecoverPasswordScreen> {
               AuthTextField(
                 textController: _textController,
                 labelText: 'Username, email address or phone number',
+                enabled: isFieldEnabled,
               ),
               smallSeparator,
               AuthButton(
                 text: 'Send recovery link',
-                callback: () {},
+                callback: () async {
+                  setState(() {
+                    isFieldEnabled = false;
+                  });
+                  final emailText = _textController.text;
+                  final isValid = isValidEmail(emailText);
+                  if (isValid) {
+                    await ref
+                        .read(authControllerProvider)
+                        .resetPassword(emailText);
+                    if (context.mounted) {
+                      context.pop();
+                    }
+                  }
+                  setState(() {
+                    isFieldEnabled = true;
+                  });
+                },
               ),
               xsSeparator,
               AuthOutlinedButton(
@@ -88,5 +110,15 @@ class _RecoverPasswordScreenState extends State<RecoverPasswordScreen> {
         ),
       ),
     );
+  }
+
+  bool isValidEmail(final String emailValue) {
+    final bool isEmailValid = RegExp(
+      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+    ).hasMatch(emailValue);
+    if (isEmailValid) {
+      return true;
+    }
+    return false;
   }
 }

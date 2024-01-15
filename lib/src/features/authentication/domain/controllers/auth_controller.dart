@@ -38,6 +38,10 @@ class AuthController {
     }
   }
 
+  Future<void> resetPassword(final String email) async {
+    await _authService.resetPassword(email);
+  }
+
   Future<void> signOut() async {
     await _authService.signOut();
   }
