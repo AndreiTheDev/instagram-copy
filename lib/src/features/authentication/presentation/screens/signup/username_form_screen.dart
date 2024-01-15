@@ -101,24 +101,14 @@ class _UsernameFormScreenState extends ConsumerState<UsernameFormScreen> {
                 setState(() {
                   _textFieldEnabled = false;
                 });
-                await ref
+                final isValidUsername = ref
                     .read(signUpFormControllerProvider.notifier)
-                    .isValidUsername();
-                final isValidating = ref.read(
-                  signUpFormControllerProvider
-                      .select((value) => value.username.isValidating),
-                );
-                final error = ref.read(
-                  signUpFormControllerProvider
-                      .select((value) => value.username.error?.errorText),
-                );
-                if (error == null && !isValidating) {
+                    .shouldValidateUsername();
+                if (isValidUsername) {
                   if (isPersisted.hasValue && isPersisted.value!) {
-                    context.mounted &&
-                        await const PersistedPhoneNumberRoute().push(context);
+                    await const PersistedPhoneNumberRoute().push(context);
                   } else {
-                    context.mounted &&
-                        await const PhoneNumberRoute().push(context);
+                    await const PhoneNumberRoute().push(context);
                   }
                 }
                 setState(() {

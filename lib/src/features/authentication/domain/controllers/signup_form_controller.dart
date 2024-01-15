@@ -98,6 +98,7 @@ class SignUpFormController extends _$SignUpFormController {
           )
           .call<bool>(usernameValue)
           .then((result) => result.data);
+      print(isValidUsername);
       if (!isValidUsername) {
         state = state.copyWith.username(
           error: AuthFieldError.usernameTaken(usernameValue),
@@ -105,8 +106,18 @@ class SignUpFormController extends _$SignUpFormController {
         );
         return;
       }
-      state = state.copyWith.username(isValidating: false);
+      state = state.copyWith.username(error: null, isValidating: false);
     });
+  }
+
+  bool shouldValidateUsername() {
+    final String fieldValue = state.username.fieldValue;
+    final isValidating = state.username.isValidating;
+    final error = state.username.error?.errorText;
+    if (fieldValue.isNotEmpty && !isValidating && error == null) {
+      return true;
+    }
+    return false;
   }
 
   bool isValidPhoneNumber() {
