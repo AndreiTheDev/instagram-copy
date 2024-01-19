@@ -1,5 +1,6 @@
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:logger/logger.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../utils/logger.dart';
@@ -12,14 +13,17 @@ part 'auth_service.g.dart';
 
 @riverpod
 AuthService authService(final AuthServiceRef ref) {
-  return AuthService(ref.watch(mobileAuthRepositoryProvider));
+  return AuthService(
+    ref.watch(mobileAuthRepositoryProvider),
+    getLogger(AuthService),
+  );
 }
 
 class AuthService {
-  AuthService(this._authRepository);
+  AuthService(this._authRepository, this._logger);
 
   final IAuthRepository _authRepository;
-  final _logger = getLogger(AuthService);
+  final Logger _logger;
 
   Future<void> signIn(final String email, final String password) async {
     try {
@@ -59,6 +63,8 @@ class AuthService {
       _logger.e(e.code);
     } on FirebaseFunctionsException catch (e) {
       _logger.e(e.code);
+    } on Exception catch (e) {
+      _logger.e(e.toString());
     }
   }
 
@@ -84,7 +90,7 @@ class AuthService {
     } on FirebaseAuthException catch (e) {
       _logger.e(e.message);
     } on Exception catch (e) {
-      _logger.e(e);
+      _logger.e(e.toString());
     }
   }
 }
