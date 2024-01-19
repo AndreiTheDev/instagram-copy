@@ -8,11 +8,16 @@ part 'mobile_auth_repository.g.dart';
 
 @riverpod
 MobileAuthRepository mobileAuthRepository(final MobileAuthRepositoryRef ref) =>
-    MobileAuthRepository();
+    MobileAuthRepository(
+      FirebaseFunctions.instance,
+      FirebaseAuth.instance,
+    );
 
 class MobileAuthRepository implements IAuthRepository {
-  final _functionsInstance = FirebaseFunctions.instance;
-  final _authInstance = FirebaseAuth.instance;
+  MobileAuthRepository(this._functionsInstance, this._authInstance);
+
+  final FirebaseFunctions _functionsInstance;
+  final FirebaseAuth _authInstance;
 
   @override
   Future<void> signIn(

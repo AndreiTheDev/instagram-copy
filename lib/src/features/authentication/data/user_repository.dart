@@ -7,11 +7,12 @@ part 'user_repository.g.dart';
 
 @riverpod
 UserRepository userRepository(final UserRepositoryRef ref) {
-  return UserRepository();
+  return UserRepository(FirebaseAuth.instance);
 }
 
 class UserRepository {
-  final _authInstance = FirebaseAuth.instance;
+  UserRepository(this._authInstance);
+  final FirebaseAuth _authInstance;
 
   Stream<UserEntity?> userChanges() async* {
     final changes = _authInstance.userChanges();

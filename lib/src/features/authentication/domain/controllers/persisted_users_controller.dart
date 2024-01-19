@@ -12,7 +12,6 @@ class PersistedUsersController extends _$PersistedUsersController {
   @override
   Future<List<UserModel>> build() async {
     final usersInStorage = await getAllUsers();
-    print(usersInStorage);
     return usersInStorage;
   }
 

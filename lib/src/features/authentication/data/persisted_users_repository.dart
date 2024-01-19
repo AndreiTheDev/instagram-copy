@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:logger/logger.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../utils/logger.dart';
@@ -12,14 +13,19 @@ part 'persisted_users_repository.g.dart';
 PersistedUsersRepository persistedUsersRepository(
   final PersistedUsersRepositoryRef ref,
 ) =>
-    PersistedUsersRepository();
+    PersistedUsersRepository(
+      const FlutterSecureStorage(
+        aOptions: AndroidOptions(encryptedSharedPreferences: true),
+      ),
+      getLogger(PersistedUsersRepository),
+    );
 
 class PersistedUsersRepository {
+  PersistedUsersRepository(this._storage, this._logger);
+
   //init
-  final _storage = const FlutterSecureStorage(
-    aOptions: AndroidOptions(encryptedSharedPreferences: true),
-  );
-  final _logger = getLogger(PersistedUsersRepository);
+  final FlutterSecureStorage _storage;
+  final Logger _logger;
 
   Future<void> addUser(final UserEntity entity) async {
     try {
@@ -41,7 +47,6 @@ class PersistedUsersRepository {
     } on Exception catch (e) {
       _logger.e(e.toString());
     }
-    // return getAllUsers();
   }
 
   Future<List<UserEntity>> getAllUsers() async {

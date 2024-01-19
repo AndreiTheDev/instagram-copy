@@ -98,7 +98,6 @@ class SignUpFormController extends _$SignUpFormController {
           )
           .call<bool>(usernameValue)
           .then((result) => result.data);
-      print(isValidUsername);
       if (!isValidUsername) {
         state = state.copyWith.username(
           error: AuthFieldError.usernameTaken(usernameValue),
