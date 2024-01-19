@@ -14,7 +14,6 @@ class AuthenticationScreen extends ConsumerWidget {
     ref.listen(
       isPersistedFlowProvider,
       (prev, next) {
-        print('prev: $prev');
         if (prev?.value != next.value) {
           switch (next) {
             case AsyncData(:final value):

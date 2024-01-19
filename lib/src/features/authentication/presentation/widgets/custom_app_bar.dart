@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import '../../../../constants/exports.dart';
 
 class CustomAppBar extends StatelessWidget {
-  const CustomAppBar(
-      {this.buttonLeft, this.widgetMiddle, this.buttonRight, super.key});
+  const CustomAppBar({
+    this.buttonLeft,
+    this.widgetMiddle,
+    this.buttonRight,
+    super.key,
+  });
 
   final Widget? buttonLeft;
   final Widget? widgetMiddle;
