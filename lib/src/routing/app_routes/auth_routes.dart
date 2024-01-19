@@ -56,7 +56,8 @@ class SplashScreenRoute extends GoRouteData {
           path: 'persisted-settings',
           routes: [
             TypedGoRoute<PersistedSingleSettingsRoute>(
-                path: 'delete-persisted'),
+              path: 'delete-persisted',
+            ),
           ],
         ),
         TypedGoRoute<PersistedSignInRoute>(path: 'signin'),

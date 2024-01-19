@@ -20,7 +20,6 @@ GoRouter router(final RouterRef ref) {
       ...$appRoutes,
     ],
     redirect: (final context, final state) {
-      print(state.fullPath);
       if (userStateProviderValue.isLoading || userStateProviderValue.hasError) {
         return null;
       }
