@@ -17,9 +17,9 @@ class DeletePersistedList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(xsSize),
-        child: GradientDecoration(
+      body: GradientDecoration(
+        child: Padding(
+          padding: const EdgeInsets.all(xsSize),
           child: Column(
             children: [
               CustomAppBar(
